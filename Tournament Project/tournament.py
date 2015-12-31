@@ -10,7 +10,6 @@ def connect():
     """Connect to the PostgreSQL database. Returns a database connection."""
     return psycopg2.connect("dbname=tournament")
 
-
 def deleteMatches():
     """Remove all the match records from the database."""
     conn=connect()
@@ -35,10 +34,9 @@ def countPlayers():
     #counts the number of names
     c.execute("SELECT COUNT(name) FROM players")
 
-    rows = c.fetchall()
-    for row in rows:
-        return row[0]
+    rows = c.fetchone()
     conn.close()
+    return rows[0]
 
 def registerPlayer(pname):
     """Adds a player to the tournament database.
@@ -51,8 +49,7 @@ def registerPlayer(pname):
     """
     conn=connect()
     c=conn.cursor()
-    # query = "INSERT INTO players (name, wins, matches) VALUES (%s, 0, 0)"
-    c.execute("INSERT INTO players (name, wins, matches) VALUES (%s, 0, 0)", (pname,))
+    c.execute("INSERT INTO players (name) VALUES (%s)", (pname,))
     conn.commit()
     conn.close()
 
@@ -71,10 +68,10 @@ def playerStandings():
     """
     conn=connect()
     c=conn.cursor()
-    c.execute("SELECT * FROM players ORDER BY wins DESC")
+    c.execute("SELECT * FROM playerStandings")
     rows = c.fetchall()
-    return rows
     conn.close()
+    return rows
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
@@ -86,37 +83,12 @@ def reportMatch(winner, loser):
     conn=connect()
     c=conn.cursor()
 
-    #retrieve previous number of wins & matches from winning player
-    c.execute("SELECT * FROM players WHERE id = " + str(winner))
-    rows = c.fetchall()
-    for row in rows:
-        prev_wins = row[2]
-        prev_matches = row[3]
-
-    #make curr_wins & matches equal the current numbers for winner
-    curr_wins = prev_wins + 1
-    curr_matches = prev_matches + 1
-
-    #update wins/matches with current number
-    c.execute("UPDATE players SET wins=" + str(curr_wins) + " WHERE id =" + str(winner))
-    c.execute("UPDATE players SET matches=" + str(curr_matches) + " WHERE id =" + str(winner))
-    conn.commit()
-
-    ##retrieve previous number of matches from losing player
-    c.execute("SELECT * FROM players WHERE id = " + str(loser))
-    rows = c.fetchall()
-    for row in rows:
-        prev_matches = row[3]
-
-    #make curr_matches equal the current number for loser    
-    curr_matches = prev_matches + 1
-    c.execute("UPDATE players SET matches=" + str(curr_matches) + " WHERE id =" + str(loser))
-    conn.commit()
-
     #insert new match into matches table with match id, winner id and loser id
     c.execute("INSERT INTO matches (winner, loser) VALUES (" + str(winner)+ ", " + str(loser) + ")")
+
     conn.commit()
     conn.close()
+    print "added"
 
 def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
@@ -148,3 +120,5 @@ def swissPairings():
         else:
             i += 1
     return teams
+
+
