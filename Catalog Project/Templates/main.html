@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="https://apis.google.com/js/platform.js?onload=start"></script>
+  </script>
+	</head>
+	<body>
+		<div id="container">
+			{% include 'header.html' %}
+			<aside>
+				{% include 'leftnav.html' %}
+				{% include 'footer.html' %}
+			</aside>
+			<section>
+				<div class="c-mainContent__text">
+					{# DISPLAY ERROR MESSAGES #}
+					{% with messages = get_flashed_messages() %}
+					{% if messages %}
+					<div class="o-alert">
+					{% for message in messages %}
+				    <div>{{ message }}</div>
+					{% endfor %}
+					</div>
+					{% endif %}
+					{% endwith %}
+
+				{% block content %}
+				{% endblock %}
+				</div>
+			</section>
+		</div>
+	</body>
+</html>

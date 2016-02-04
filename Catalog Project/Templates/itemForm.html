@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<form action="{{ url_for('itemForm', action=action, id=id)}}" method = 'post'>
+
+{# PULL TITLE FROM URL #}
+{% set title = action.title() + " Item" %}
+{% if action == 'delete' %}
+{% set title = title + ' "%s"' % itemData.name %}	
+{% endif %}
+{% set submit = action.title() %}
+
+<h1>{{ title }}</h1>
+
+{# SET INPUT VALUES FOR EDIT FORM #}
+{% if action == 'add' %}
+{% set itemData = [] %}
+{% endif %}
+{% if action != 'delete' %}
+<p>Name:</p><input type="text" size="30" name="name" value="{{itemData.name}}"></input>
+<p>Category:</p><select name="category">
+{% if action=='edit' %}
+{% set currentCatID = itemData.category_id %}
+<option value="{{itemData.category_id}}">{{itemData.category.name}}</option>
+{% endif %}
+{% for cat in allCategories %}
+{% if currentCatID != cat.id %}
+  <option value="{{cat.id}}">{{cat.name}}</option>
+{% endif %}
+{% endfor %}
+</select>
+<p>Description:</p><textarea name="description" cols="40" rows="5">{{itemData.description}}</textarea>
+<br>
+{% endif %}
+
+<input class="o-btn" type='submit' value='{{submit}}'>
+
+</form>
+
+
+
+{% endblock %}

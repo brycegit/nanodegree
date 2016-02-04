@@ -1,0 +1,27 @@
+{% extends "main.html" %}
+{% block content %}
+
+{# DISPLAY ALL ITEMS VERSION OF PAGE #}
+{% if item_id == 'all' %}
+<h1>All Items</h1>
+{% for item in items %}
+<h2><a href="{{url_for('item', item_id=item.id)}}">{{ item.name }}</a></h2>
+{% if loggedIn == 'true' %}
+<p><a href="{{url_for('itemForm', action='edit', id=item.id)}}">Edit</a> | <a href="{{url_for('itemForm', action='delete', id=item.id)}}">Delete</a></p>
+{% endif %}
+{% endfor %}
+
+{# DISPLAY SINGLE ITEM VERSION OF PAGE #}
+{% else %}
+<i>Item:</i>
+<h1>{{item.name}}</h1>
+{% if loggedIn == 'true' %}
+<p><a href="{{url_for('itemForm', action='edit', id=item.id)}}">Edit</a> | <a href="{{url_for('itemForm', action='delete', id=item.id)}}">Delete</a></p>
+{% endif %}
+<h2>Description:</h2>
+<p>{{item.description}}</p>
+<h2>Category:</h2> 
+<a href="{{url_for('category', cat_id=item.category.id)}}">{{item.category.name}}</a></p>
+
+{% endif %}
+{% endblock %}

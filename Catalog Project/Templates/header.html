@@ -1,0 +1,8 @@
+<nav class="clearfix">
+<div class="c-nav__logo"><a href="{{url_for('homepage')}}">Catalog App</a></div>
+{% if loggedIn == 'true'%}
+<div class="o-btn c-nav__loginButton"><a href="{{url_for('gdisconnect')}}">Logout</a></div>
+{% else %}
+<div class="o-btn c-nav__loginButton"><a href="{{url_for('login')}}">Login</a></div>
+{% endif %}
+</nav>

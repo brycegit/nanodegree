@@ -1,0 +1,198 @@
+/*GLOBAL PAGE LAYOUT*/
+	/*Remove extra padding, borders and margins*/
+	*, html,
+	body,
+	div {
+	  margin: 0;
+	  border: 0 none;
+	  padding: 0;
+	}
+	/*Set page to 100% heigh*/
+	html,
+	body,
+	#container,
+	aside {
+	  height: 100%;
+	  min-height: 100%;
+	}
+
+	body, nav, footer{
+		min-width: 500px;
+	}
+
+	/*Set container to 100% width*/
+	#container{
+		width: 100%;
+		min-height: 100%;
+	}
+
+	aside{
+		float: left;
+		width: 20%;
+		background-color: #ccc;
+		text-align: left;
+		position: fixed;
+		margin-top: 40px;
+		padding: 40px 0px;
+	}
+		@media (max-width: 600px){
+					aside{
+						width: 25%;
+					}
+				}
+
+	aside > ul{
+		list-style-type: none;
+		max-width: 140px;
+		margin: 0px auto;
+		padding: 0px 15px;
+	}
+
+	aside > ul > li{
+		margin-bottom: 10px;
+	}
+
+	section{
+		width: 80%;
+		margin-left: 20%;
+		padding-top:40px;
+	}
+		@media (max-width: 600px){
+				section{
+					width: 75%;
+				}
+			}
+
+	nav{
+		padding: 0px 80px;
+		background-color: #ddd;
+		position: fixed;
+		height:40px;
+		width: 100%;
+	}
+
+	footer{
+		position: fixed;
+		bottom:0px;
+		width: 100%;
+		text-align: center;
+		background-color: #ccc;
+		padding:5px;
+	}
+
+/*COMPONENTS*/
+/*Components are meant to live with a certain section, as noted after the "c-"*/
+	.c-nav__logo{
+		float: left;
+		margin-top: 11px;
+	}
+		@media (max-width: 800px){
+			.c-nav__logo{
+				margin-left: -35px;
+			}
+		}
+		.c-nav__logo > a{
+			color:inherit;
+			text-decoration: none;
+		}
+		.c-nav__logo > a:hover{
+			text-decoration: none;
+		}
+
+	.c-nav__loginButton{
+		float: right;
+		margin-right: 180px;
+		margin-top: 6px;
+	}
+		@media (max-width: 800px){
+			.c-nav__loginButton{
+				margin-right: 110px;
+			}
+		}
+
+	.c-mainContent__text{
+		padding:40px 60px 40px 60px; 
+	}
+
+	.c-mainContent__text--card{
+		border:1px solid #ddd;
+		display: inline-block;
+		padding: 20px;
+		margin: 10px;
+		width: 180px;
+		height: 150px;
+		float: left;
+	}
+
+/*OBJECTS*/
+/*Objects are global elements that can live anywhere*/
+	.o-btn{
+		border: 1px solid #ccc;
+		padding: 4px;
+		font-size: 14px;
+		display: inline-block;
+		background-color: #ccc; 
+	}
+		.o-btn:hover{
+			background-color: #aaa;
+			cursor: pointer;
+		}
+
+	.o-alert{
+		color: red;
+		position: absolute;
+		margin: -25px auto 20px auto;
+	}
+
+/*STYLES*/
+/*Style classes can be applied to any element*/
+	/*Global styles*/
+	*{
+		font-family: helvetica, arial, sans-serif;
+		font-size: 14px;
+	}
+	/*This applies to body and section*/
+	body{
+		background-color: #f2f2f2;
+	}
+
+	h1 > a, h2 > a, h3 > a{
+		text-decoration: none;
+	}
+
+	h1{
+		font-size: 36px;
+		margin-bottom: 12px;
+	}
+
+	h2{
+		font-size: 18px;
+		margin: 8px auto;
+	}
+
+	p{
+		margin: 10px auto 20px auto;
+	}
+
+	form > p{
+		margin: 15px auto 10px auto;
+	}
+
+	a{
+		color: inherit;
+		font-size: inherit;
+	}
+		a:hover{
+			text-decoration: underline;
+		}
+
+	i{
+		font-size: 13px;
+		margin-top: -4px;
+	}	
+
+/*HELPER CLASSES*/
+	.clearfix {
+	  overflow: auto;
+	  zoom: 1;
+	}

@@ -1,0 +1,10 @@
+<ul>
+<li><h3>Quick Links</h3></li>
+<li><a href="{{url_for('category', cat_id='all')}}">View All Categories</a></li>
+<li><a href="{{url_for('item', item_id='all')}}">View All Items</a></li>
+{% if loggedIn == 'true' %}
+<li><a href="{{url_for('categoryForm', action='add', id=0)}}">Add Category</a></li>
+<li><a href="{{url_for('itemForm', action='add', id=0)}}">Add Item</a></li>
+{% endif %}
+<li><a href="{{url_for('itemsjson')}}">JSON</a></li>
+</ul>
