@@ -333,6 +333,34 @@ class ConferenceApi(remote.Service):
         return SessionForms(
             items=[self._copySessionToForm(sesh) for sesh in sessionsTypeExcluded]
         ) 
+
+    @endpoints.method(message_types.VoidMessage, SessionForms,
+        path='filterPlayground2',
+        http_method='GET', name='filterPlayground2')
+    def filterPlayground2(self, request):
+        """Filter Experimentation #2"""
+        q = Session.query()
+        q = q.order(Session.startTime)
+        q = q.filter(Session.startTime < 1900)
+        q = q.filter(Session.name == "test")
+        
+        return SessionForms(
+            items=[self._copySessionToForm(sesh) for sesh in q]
+        ) 
+
+    @endpoints.method(message_types.VoidMessage, ConferenceForms,
+        path='filterPlayground3',
+        http_method='GET', name='filterPlayground3')
+    def filterPlayground3(self, request):
+        """Filter Experimentation #3"""
+        q = Conference.query()
+        q = q.order(Conference.name)
+        q = q.filter(Conference.name == "test")
+        q = q.filter(Conference.topics == "test")
+        
+        return ConferenceForms(
+            items=[self._copyConferenceToForm(i, "") for i in q]
+        )       
       
     def _getQuery(self, request):
         """Return formatted query from the submitted filters."""
@@ -519,9 +547,16 @@ class ConferenceApi(remote.Service):
 
     def _copySessionToForm(self, request):
         sf = SessionForm()
+        data = {field.name: getattr(request, field.name) for field in sf.all_fields()}
         for field in sf.all_fields():
             if hasattr(request, field.name):
-               setattr(sf, field.name, getattr(request, field.name))
+                if field.name == 'date':
+                    setattr(sf, field.name, str(getattr(request, field.name)))
+                elif field.name == 'startTime':
+                        if data['startTime']:
+                            setattr(sf, field.name, int(getattr(request, field.name)))
+                else:
+                    setattr(sf, field.name, getattr(request, field.name))
         sf.check_initialized()
         return sf
             

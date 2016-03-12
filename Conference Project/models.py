@@ -121,7 +121,6 @@ class Session(ndb.Model):
     date          = ndb.DateProperty()
     startTime     = ndb.IntegerProperty()
     websafeKey    = ndb.StringProperty()
-    featuredSpeaker = ndb.BooleanProperty(default=False)
 
 class SessionForm(messages.Message):
     name          = messages.StringField(1)

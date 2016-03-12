@@ -25,19 +25,21 @@ App Engine application for the Udacity training course.
 1. Deploy your application.
 
 ## Overview of Sessions and Speakers
-Sessions: implemented by creating 3 classes that methods interact with: 1) Session 2) SessionForm 3) SessionForms
+Sessions: implemented by creating 3 classes that methods interact with: 1) Session 2) SessionForm 3) SessionForms. Most of the properties use the string field data type, with the exception of date which uses the date data type making it a structured date, and start time which uses the integer data type so that it can be sorted.
 Speaker: Speaker names are stored in the Session class. The getFeaturedSpeaker method utilizes memcache since only a simple message needs to be stored.
 
 ## New Query Types - two added
-- kind: Conference
-  properties:
-  - name: topics
-  - name: name
-
+1) Implemented in filterPlayground 2 endpoint
 - kind: Session
   properties:
   - name: name
   - name: startTime
+
+2) Implemented in filterPlayground 3 endpoint
+- kind: Conference
+  properties:
+  - name: topics
+  - name: name
 
 ##Query Problem
 Problem: The problem is that you cannot have two inequality filters in one query
