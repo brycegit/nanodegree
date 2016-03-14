@@ -29,21 +29,14 @@ Sessions: implemented by creating 3 classes that methods interact with: 1) Sessi
 Speaker: Speaker names are stored in the Session class. The getFeaturedSpeaker method utilizes memcache since only a simple message needs to be stored.
 
 ## New Query Types - two added
-1) Implemented in filterPlayground 2 endpoint
-- kind: Session
-  properties:
-  - name: name
-  - name: startTime
+1) Get Sessions in 4 hour window - Implemented in filterPlayground 2 endpoint
 
-2) Implemented in filterPlayground 3 endpoint
-- kind: Conference
-  properties:
-  - name: topics
-  - name: name
+2) Get Conferences excluding certain topic - Implemented in filterPlayground 3 endpoint
+
 
 ##Query Problem
 Problem: The problem is that you cannot have two inequality filters in one query
-My Solution (implemented in FilterPlayground endpoint): Do one inequality filter on start time; 
+My Solution (implemented in FilterPlayground #1 endpoint): Do one inequality filter on start time; 
 then loop through sessions and add sessions to new list that meet the 'typeOfSession' criteria
 
 [1]: https://developers.google.com/appengine

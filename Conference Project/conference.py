@@ -97,6 +97,16 @@ SESS_BY_SPEAKER_REQUEST = endpoints.ResourceContainer(
     speaker=messages.StringField(1),
 ) 
 
+SESS_BY_TIME_REQUEST = endpoints.ResourceContainer(
+    message_types.VoidMessage,
+    startTime=messages.IntegerField(1, variant=messages.Variant.INT32),
+) 
+
+CONF_BY_CITY_REQUEST = endpoints.ResourceContainer(
+    message_types.VoidMessage,
+    city=messages.StringField(1),
+) 
+
 MEMCACHE_ANNOUNCEMENTS_KEY = "Recent Announcements"  
 
 MEMCACHE_FEATURED_SPEAKER_KEY = "Featured Speaker"      
@@ -334,34 +344,35 @@ class ConferenceApi(remote.Service):
             items=[self._copySessionToForm(sesh) for sesh in sessionsTypeExcluded]
         ) 
 
-    @endpoints.method(message_types.VoidMessage, SessionForms,
+    @endpoints.method(SESS_BY_TIME_REQUEST, SessionForms,
         path='filterPlayground2',
         http_method='GET', name='filterPlayground2')
     def filterPlayground2(self, request):
-        """Filter Experimentation #2"""
+        """Filter Experimentation #2 - Get Sessions in 4 hour window"""
+        start = request.startTime
+        end = request.startTime + 400
         q = Session.query()
         q = q.order(Session.startTime)
-        q = q.filter(Session.startTime < 1900)
-        q = q.filter(Session.name == "test")
+        q = q.filter(Session.startTime >= start)
+        q = q.filter(Session.startTime <= end)
         
         return SessionForms(
             items=[self._copySessionToForm(sesh) for sesh in q]
         ) 
 
-    @endpoints.method(message_types.VoidMessage, ConferenceForms,
+    @endpoints.method(CONF_BY_CITY_REQUEST, ConferenceForms,
         path='filterPlayground3',
         http_method='GET', name='filterPlayground3')
     def filterPlayground3(self, request):
-        """Filter Experimentation #3"""
+        """Filter Experimentation #3 - Get Conferences in certain city"""
         q = Conference.query()
-        q = q.order(Conference.name)
-        q = q.filter(Conference.name == "test")
-        q = q.filter(Conference.topics == "test")
+        q = q.order(Conference.city)
+        q = q.filter(Conference.city == request.city)
         
         return ConferenceForms(
             items=[self._copyConferenceToForm(i, "") for i in q]
         )       
-      
+
     def _getQuery(self, request):
         """Return formatted query from the submitted filters."""
         q = Conference.query()
