@@ -26,7 +26,7 @@ APPLICATION_NAME = "Catalog App"
 
 # DB CONNECT
 # Connect to Database and create database session
-engine = create_engine('sqlite:///catalogapp.db')
+engine = create_engine('postgresql://catalog:apassword@localhost/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -386,5 +386,5 @@ def checkLogIn():
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='52.36.250.114', port=80)
 

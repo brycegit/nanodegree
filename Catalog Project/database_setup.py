@@ -44,7 +44,6 @@ class User(Base):
 	email = Column(String(80))
 	picture = Column(String(250))
 		
-engine = create_engine(
-	'sqlite:///catalogapp.db')
+engine = create_engine('postgresql://catalog:apassword@localhost/catalog')
 
 Base.metadata.create_all(engine)
